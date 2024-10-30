@@ -1,5 +1,11 @@
+import { transactions } from "../dummyData/data.js";
+
 const transactionResolver = {
-  Query: {},
+  Query: {
+    transactions: () => {
+      return transactions;
+    },
+  },
   Mutation: {},
 };
 
