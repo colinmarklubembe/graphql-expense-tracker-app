@@ -7,23 +7,30 @@ const transactionSchema = new mongoose.Schema(
       ref: "User",
       required: true,
     },
-    username: {
+    description: {
       type: String,
       required: true,
     },
-    name: {
+    paymentType: {
       type: String,
+      enum: ["cash", "card"],
       required: true,
     },
-    password: {
+    category: {
       type: String,
+      enum: ["saving", "expense", "investment"],
       required: true,
     },
-    profilePicture: {
-      type: String,
+    amount: {
+      type: Number,
+      required: true,
     },
-    gender: {
+    location: {
       type: String,
+      default: "Unknown",
+    },
+    date: {
+      type: Date,
       required: true,
     },
   },
