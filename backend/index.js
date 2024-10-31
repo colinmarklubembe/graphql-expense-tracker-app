@@ -66,7 +66,7 @@ app.use(
   }),
   express.json(),
   expressMiddleware(server, {
-    context: async ({ req }) => buildContext({ req }),
+    context: async ({ req }) => buildContext({ req, res }),
   })
 );
 
