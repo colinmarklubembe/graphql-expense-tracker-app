@@ -27,7 +27,7 @@ const TransactionPage = () => {
   // if (loading) return <TransactionFormSkeleton />;
 
   return (
-    <div className="h-screen max-w-4xl mx-auto flex flex-col items-center">
+    <div className="h-screen max-w-4xl mx-auto flex flex-col items-center z-50">
       <p className="md:text-4xl text-2xl lg:text-4xl font-bold text-center relative z-50 mb-4 mr-4 bg-gradient-to-r from-pink-600 via-indigo-500 to-pink-400 inline-block text-transparent bg-clip-text">
         Update this transaction
       </p>
@@ -35,7 +35,7 @@ const TransactionPage = () => {
         className="w-full max-w-lg flex flex-col gap-5 px-3 "
         onSubmit={handleSubmit}
       >
-        {/* TRANSACTION */}
+        {/* TR</div>ANSACTION */}
         <div className="flex flex-wrap">
           <div className="w-full">
             <label
@@ -70,8 +70,9 @@ const TransactionPage = () => {
                 id="paymentType"
                 name="paymentType"
                 onChange={handleInputChange}
-                defaultValue={formData.paymentType}
+                // defaultValue={formData.paymentType}
               >
+                <option>-- select --</option>
                 <option value={"card"}>Card</option>
                 <option value={"cash"}>Cash</option>
               </select>
@@ -101,8 +102,9 @@ const TransactionPage = () => {
                 id="category"
                 name="category"
                 onChange={handleInputChange}
-                defaultValue={formData.category}
+                // defaultValue={formData.category}
               >
+                <option>-- select --</option>
                 <option value={"saving"}>Saving</option>
                 <option value={"expense"}>Expense</option>
                 <option value={"investment"}>Investment</option>

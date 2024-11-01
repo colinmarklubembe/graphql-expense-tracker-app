@@ -3,14 +3,19 @@ import { createRoot } from "react-dom/client";
 import "@/index.css";
 import App from "@/App.tsx";
 import { BrowserRouter } from "react-router-dom";
-import { AuroraBackground } from "@/components/ui/aurora-background.tsx";
+// import { AuroraBackground } from "@/components/ui/aurora-background.tsx";
+// import { BackgroundLines } from "./components/ui/background-lines";
+import { BackgroundBeams } from "./components/ui/background-beams";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <BrowserRouter>
-      <AuroraBackground className="bg-black">
+      {/* <BackgroundLines> */}
+      <div className="bg-black w-full">
+        <BackgroundBeams />
         <App />
-      </AuroraBackground>
+      </div>
+      {/* </BackgroundLines> */}
     </BrowserRouter>
   </StrictMode>
 );

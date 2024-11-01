@@ -9,7 +9,7 @@ import {
 import Header from "@/components/ui/header";
 
 function App() {
-  const authUser = false;
+  const authUser = true;
   return (
     <>
       {authUser && <Header />}
