@@ -48,26 +48,7 @@ const userResolver = {
       try {
         const { username, password } = input;
 
-        if (!username || !password) {
-          throw new Error("All fields are required! Please fill in all fields");
-        }
-
-        const existingUser = await User.findOne({ username });
-
-        if (!existingUser) {
-          throw new Error("User not found");
-        }
-
-        const isPasswordCorrect = await bcrypt.compare(
-          password,
-          existingUser.password
-        );
-
-        if (!isPasswordCorrect) {
-          throw new Error("Invalid credentials");
-        }
-
-        const user = await context.authenticate("graphql-local", {
+        const { user } = await context.authenticate("graphql-local", {
           username,
           password,
         });
@@ -84,12 +65,12 @@ const userResolver = {
     logout: async (_, __, context) => {
       try {
         await context.logout();
-        req.session.destroy((error) => {
+        context.req.session.destroy((error) => {
           if (error) {
             throw error;
           }
         });
-        res.clearCookie("connect.sid");
+        context.res.clearCookie("connect.sid");
 
         return { message: "Successfully logged out" };
       } catch (error) {

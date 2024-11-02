@@ -33,6 +33,7 @@ export const configurePassport = async () => {
           throw new Error("Invalid username or password");
         }
 
+        console.log("user", user);
         return done(null, user);
       } catch (error) {
         return done(error);
