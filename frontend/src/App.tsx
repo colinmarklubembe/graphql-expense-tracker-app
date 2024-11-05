@@ -36,7 +36,7 @@ function App() {
         <Route
           path="/transaction/:id"
           element={
-            !data?.authUser ? <TransactionPage /> : <Navigate to="/login" />
+            data?.authUser ? <TransactionPage /> : <Navigate to="/login" />
           }
         />
         <Route path="*" element={<NotFoundPage />} />

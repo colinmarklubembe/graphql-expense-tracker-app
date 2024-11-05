@@ -28,6 +28,7 @@ const transactionTypeDef = `#graphql
         category: String!
         amount: Float!
         location: String
+        date: String!
     }
 
     input UpdateTransactionInput {

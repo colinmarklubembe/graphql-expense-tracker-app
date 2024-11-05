@@ -50,7 +50,7 @@ const transactionResolver = {
   Query: {
     transactions: async (_, __, context) => {
       try {
-        if (!context.getUSer()) throw new Error("Unauthenticated");
+        if (!context.getUser()) throw new Error("Unauthenticated");
 
         const userId = await context.getUser()._id;
         const transactions = await Transaction.find({ userId });

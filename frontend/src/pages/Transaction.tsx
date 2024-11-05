@@ -1,19 +1,66 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useQuery } from "@apollo/client";
+import { useMutation } from "@apollo/client";
+import { UPDATE_TRANSACTION } from "@/graphql/mutations/transaction.mutation";
+import { useParams } from "react-router-dom";
+import { GET_TRANSACTION } from "@/graphql/queries/transaction.query";
+import toast from "react-hot-toast";
+import TransactionFormSkeleton from "@/components/skeletons/TransactionFormSkeleton";
 
 const TransactionPage = () => {
+  const { id } = useParams<{ id: string }>();
+
+  const { loading, data } = useQuery(GET_TRANSACTION, {
+    variables: { transactionId: id },
+  });
+
+  const [updateTransaction, { loading: updating }] =
+    useMutation(UPDATE_TRANSACTION);
+
   const [formData, setFormData] = useState({
-    description: "",
+    description: data?.transaction.description || "",
     paymentType: "",
     category: "",
-    amount: "",
-    location: "",
-    date: "",
+    amount: data?.transaction.amount || "",
+    location: data?.transaction.location || "",
+    date: data?.transaction.date || "",
   });
+
+  useEffect(() => {
+    if (data) {
+      setFormData({
+        description: data.transaction.description,
+        paymentType: data.transaction.paymentType,
+        category: data.transaction.category,
+        amount: data.transaction.amount,
+        location: data.transaction.location,
+        date: new Date(+data.transaction.date).toISOString().substring(0, 10),
+      });
+    }
+  }, [data]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("formData", formData);
+
+    const amount = parseFloat(formData.amount);
+
+    try {
+      await updateTransaction({
+        variables: {
+          input: {
+            ...formData,
+            amount,
+            transactionId: id,
+          },
+        },
+      });
+      toast.success("Transaction updated successfully");
+    } catch (error) {
+      console.log("Error updating transaction", error);
+      toast.error("Error updating transaction");
+    }
   };
+
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
@@ -24,7 +71,7 @@ const TransactionPage = () => {
     }));
   };
 
-  // if (loading) return <TransactionFormSkeleton />;
+  if (loading) return <TransactionFormSkeleton />;
 
   return (
     <div className="h-screen max-w-4xl mx-auto flex flex-col items-center z-50">
@@ -32,10 +79,10 @@ const TransactionPage = () => {
         Update this transaction
       </p>
       <form
-        className="w-full max-w-lg flex flex-col gap-5 px-3 "
+        className="w-full max-w-lg flex flex-col gap-5 px-3 relative z-50"
         onSubmit={handleSubmit}
       >
-        {/* TR</div>ANSACTION */}
+        {/* TRANSACTION */}
         <div className="flex flex-wrap">
           <div className="w-full">
             <label
@@ -70,9 +117,9 @@ const TransactionPage = () => {
                 id="paymentType"
                 name="paymentType"
                 onChange={handleInputChange}
-                // defaultValue={formData.paymentType}
+                defaultValue={data?.transaction.paymentType || ""}
               >
-                <option>-- select --</option>
+                {/* <option>-- select --</option> */}
                 <option value={"card"}>Card</option>
                 <option value={"cash"}>Cash</option>
               </select>
@@ -102,9 +149,9 @@ const TransactionPage = () => {
                 id="category"
                 name="category"
                 onChange={handleInputChange}
-                // defaultValue={formData.category}
+                defaultValue={data?.transaction.category || ""}
               >
-                <option>-- select --</option>
+                {/* <option>-- select --</option> */}
                 <option value={"saving"}>Saving</option>
                 <option value={"expense"}>Expense</option>
                 <option value={"investment"}>Investment</option>
@@ -186,8 +233,9 @@ const TransactionPage = () => {
           className="text-white font-bold w-full rounded px-4 py-2 bg-gradient-to-br
           from-pink-500 to-pink-500 hover:from-pink-600 hover:to-pink-600"
           type="submit"
+          disabled={updating}
         >
-          Update Transaction
+          {updating ? "Updating..." : "Update Transaction"}
         </button>
       </form>
     </div>

@@ -1,4 +1,13 @@
+import { useMutation } from "@apollo/client";
+import { CREATE_TRANSACTION } from "../graphql/mutations/transaction.mutation";
+import toast from "react-hot-toast";
+
 const TransactionForm = () => {
+  // TODO => Change the logic when relationships are added
+  const [createTransaction, { loading }] = useMutation(CREATE_TRANSACTION, {
+    refetchQueries: ["GetTransactions"],
+  });
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -13,6 +22,20 @@ const TransactionForm = () => {
       date: formData.get("date"),
     };
     console.log("transactionData", transactionData);
+
+    try {
+      await createTransaction({
+        variables: {
+          input: transactionData,
+        },
+      });
+
+      form.reset();
+      toast.success("Transaction added successfully");
+    } catch (error) {
+      console.error("Error: ", error);
+      toast.error((error as Error).message);
+    }
   };
 
   return (
@@ -54,6 +77,7 @@ const TransactionForm = () => {
               id="paymentType"
               name="paymentType"
             >
+              <option>-- select --</option>
               <option value={"card"}>Card</option>
               <option value={"cash"}>Cash</option>
             </select>
@@ -83,6 +107,7 @@ const TransactionForm = () => {
               id="category"
               name="category"
             >
+              <option>-- select --</option>
               <option value={"saving"}>Saving</option>
               <option value={"expense"}>Expense</option>
               <option value={"investment"}>Investment</option>
@@ -158,9 +183,10 @@ const TransactionForm = () => {
         className="text-white font-bold w-full rounded px-4 py-2 bg-gradient-to-br
           from-pink-500 to-pink-500 hover:from-pink-600 hover:to-pink-600
 						disabled:opacity-70 disabled:cursor-not-allowed"
+        disabled={loading}
         type="submit"
       >
-        Add Transaction
+        {loading ? "Loading..." : "Add Transaction"}
       </button>
     </form>
   );
