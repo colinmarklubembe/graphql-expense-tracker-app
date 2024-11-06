@@ -8,7 +8,7 @@ import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 
 const client = new ApolloClient({
   uri:
-    import.meta.env.VITE_NODE_ENV === "DEVELOPMENT"
+    import.meta.env.VITE_NODE_ENV === "development"
       ? "http://localhost:4000/gql"
       : "/gql",
   cache: new InMemoryCache(),
