@@ -32,7 +32,7 @@ const Card = ({ transaction }: CardProps) => {
   paymentType = paymentType[0].toUpperCase() + paymentType.slice(1);
 
   const [deleteTransaction, { loading }] = useMutation(DELETE_TRANSACTION, {
-    refetchQueries: ["GetTransactions"],
+    refetchQueries: ["GetTransactions", "GetTransactionStatistics"],
   });
 
   const handleDelete = async () => {

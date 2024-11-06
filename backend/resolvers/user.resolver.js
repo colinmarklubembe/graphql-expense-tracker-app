@@ -1,6 +1,6 @@
-import { users } from "../dummyData/data.js";
 import User from "../models/user.model.js";
 import bcrypt from "bcryptjs";
+import Transaction from "../models/transaction.model.js";
 
 const userResolver = {
   Mutation: {
@@ -21,9 +21,9 @@ const userResolver = {
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
 
-        // https://avatar-placeholder.iran.liara.run/
-        const boyProfilePicture = `https://avatar-placeholder.iran.liara.run/public/boy?username=${username}`;
-        const girlProfilePicture = `https://avatar-placeholder.iran.liara.run/public/girl?username=${username}`;
+        // https://avatar.iran.liara.run/public/57
+        const boyProfilePicture = `https://avatar.iran.liara.run/public/boy?username=${username}`;
+        const girlProfilePicture = `https://avatar.iran.liara.run/public/girl?username=${username}`;
 
         const newUser = new User({
           username,
@@ -107,7 +107,19 @@ const userResolver = {
       }
     },
   },
-  // TODO: ADD USER/TRANSACTION RELATION
+  User: {
+    transactions: async (parent) => {
+      try {
+        console.log("parent: ", parent);
+        const transactions = await Transaction.find({ userId: parent._id });
+
+        return transactions;
+      } catch (error) {
+        console.log("Error in User.transactions: ", error);
+        throw new Error(error.message || "Error getting transactions");
+      }
+    },
+  },
 };
 
 export default userResolver;

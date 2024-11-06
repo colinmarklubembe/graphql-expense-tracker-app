@@ -1,6 +1,10 @@
 import Card from "./Card";
 import { useQuery } from "@apollo/client";
 import { GET_TRANSACTIONS } from "@/graphql/queries/transaction.query";
+import {
+  GET_AUTHENTICATED_USER,
+  GET_USER_AND_TRANSACTIONS,
+} from "@/graphql/queries/user.query";
 
 export interface Transaction {
   _id: string;
@@ -15,6 +19,11 @@ export interface Transaction {
 
 const Cards = () => {
   const { data, loading } = useQuery(GET_TRANSACTIONS);
+  const { data: authUser } = useQuery(GET_AUTHENTICATED_USER);
+  const { data: userTransactions } = useQuery(GET_USER_AND_TRANSACTIONS, {
+    skip: !authUser?.authUser?._id,
+    variables: { userId: authUser?.authUser?._id },
+  });
 
   // TODO => Add relationships between transactions and user
 

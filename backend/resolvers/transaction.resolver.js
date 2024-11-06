@@ -72,7 +72,31 @@ const transactionResolver = {
         throw new Error("Error fetching transaction");
       }
     },
-    // TODO: ADD CATEGORY STATISTICS QUERY
+    categoryStatistics: async (_, __, context) => {
+      try {
+        if (!context.getUser()) throw new Error("Unauthenticated");
+
+        const userId = await context.getUser()._id;
+        const transactions = await Transaction.find({ userId });
+        const categoryMap = {};
+
+        transactions.forEach((transaction) => {
+          if (!categoryMap[transaction.category]) {
+            categoryMap[transaction.category] = 0;
+          }
+
+          categoryMap[transaction.category] += transaction.amount;
+        });
+
+        return Object.entries(categoryMap).map(([category, totalAmount]) => ({
+          category,
+          totalAmount,
+        }));
+      } catch (error) {
+        console.error("Error fetching category statistics: ", error);
+        throw new Error("Error fetching category statistics");
+      }
+    },
   },
 };
 
