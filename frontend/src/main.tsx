@@ -7,8 +7,10 @@ import { BackgroundBeams } from "./components/ui/background-beams";
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 
 const client = new ApolloClient({
-  // TODO => Update the uri on production
-  uri: "http://localhost:4000/graphql",
+  uri:
+    import.meta.env.VITE_NODE_ENV === "DEVELOPMENT"
+      ? "http://localhost:4000/gql"
+      : "/gql",
   cache: new InMemoryCache(),
   credentials: "include", // This tells the server to include the cookies in the request
 });

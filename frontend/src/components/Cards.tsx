@@ -18,7 +18,7 @@ export interface Transaction {
 }
 
 const Cards = () => {
-  const { data, loading } = useQuery(GET_TRANSACTIONS);
+  const { loading } = useQuery(GET_TRANSACTIONS);
   const { data: authUser } = useQuery(GET_AUTHENTICATED_USER);
   const { data: userTransactions } = useQuery(GET_USER_AND_TRANSACTIONS, {
     skip: !authUser?.authUser?._id,
