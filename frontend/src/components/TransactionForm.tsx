@@ -3,9 +3,12 @@ import { CREATE_TRANSACTION } from "../graphql/mutations/transaction.mutation";
 import toast from "react-hot-toast";
 
 const TransactionForm = () => {
-  // TODO => Change the logic when relationships are added
   const [createTransaction, { loading }] = useMutation(CREATE_TRANSACTION, {
-    refetchQueries: ["GetTransactions", "GetTransactionStatistics"],
+    refetchQueries: [
+      "GetTransactions",
+      "GetTransactionStatistics",
+      "GetUserAndTransactions",
+    ],
   });
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {

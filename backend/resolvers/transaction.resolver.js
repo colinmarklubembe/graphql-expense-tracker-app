@@ -1,4 +1,5 @@
 import Transaction from "../models/transaction.model.js";
+import User from "../models/user.model.js";
 
 const transactionResolver = {
   Mutation: {
@@ -45,7 +46,6 @@ const transactionResolver = {
         throw new Error("Error deleting transaction");
       }
     },
-    // TODO: ADD TRANSACTION/USER TRANSACTION DELETE MUTATION
   },
   Query: {
     transactions: async (_, __, context) => {
@@ -95,6 +95,18 @@ const transactionResolver = {
       } catch (error) {
         console.error("Error fetching category statistics: ", error);
         throw new Error("Error fetching category statistics");
+      }
+    },
+  },
+  Transaction: {
+    user: async (parent) => {
+      try {
+        const user = await User.findById(parent.userId);
+
+        return user;
+      } catch (error) {
+        console.error("Error fetching user: ", error);
+        throw new Error("Error fetching user");
       }
     },
   },

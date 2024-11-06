@@ -18,11 +18,16 @@ const categoryColorMap: { [key: string]: string } = {
   // Add more categories and corresponding color classes as needed
 };
 
+type User = {
+  profilePicture: string;
+};
+
 interface CardProps {
   transaction: Transaction;
+  authUser: User;
 }
 
-const Card = ({ transaction }: CardProps) => {
+const Card = ({ transaction, authUser }: CardProps) => {
   let { category, description, paymentType } = transaction;
   const { amount, date, location } = transaction;
 
@@ -32,7 +37,11 @@ const Card = ({ transaction }: CardProps) => {
   paymentType = paymentType[0].toUpperCase() + paymentType.slice(1);
 
   const [deleteTransaction, { loading }] = useMutation(DELETE_TRANSACTION, {
-    refetchQueries: ["GetTransactions", "GetTransactionStatistics"],
+    refetchQueries: [
+      "GetTransactions",
+      "GetTransactionStatistics",
+      "GetUserAndTransactions",
+    ],
   });
 
   const handleDelete = async () => {
@@ -86,7 +95,7 @@ const Card = ({ transaction }: CardProps) => {
         <div className="flex justify-between items-center">
           <p className="text-xs text-black font-bold">{formattedDate}</p>
           <img
-            src={"https://tecdn.b-cdn.net/img/new/avatars/2.webp"}
+            src={authUser?.profilePicture}
             className="h-8 w-8 border rounded-full"
             alt=""
           />
