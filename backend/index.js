@@ -42,11 +42,11 @@ store.on("error", (error) => console.log(error));
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
-    resave: false, // this option is required and we set it to false to prevent recreating the session every time a request hits the server (which would be a waste of resources)
-    saveUninitialized: false, // this option is required and we set it to false to prevent saving the session if nothing was modified during the request
+    resave: false,
+    saveUninitialized: false,
     cookie: {
       maxAge: 1000 * 60 * 60 * 24 * 7, // 1 week
-      httpOnly: true, // this option is set to true to prevent client-side JavaScript from reading the cookie
+      httpOnly: true,
     },
     store,
   })
@@ -76,10 +76,11 @@ app.use(
   })
 );
 
-app.use(express.static(path.join(__dirname, "frontend/dist")));
+// Serve static files from 'public' folder after Vite build
+app.use(express.static(path.join(__dirname, "public")));
 
 app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "frontend/dist", "index.html"));
+  res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
 await new Promise((resolve) => httpServer.listen({ port: 4000 }, resolve));
