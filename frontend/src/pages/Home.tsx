@@ -52,28 +52,27 @@ const HomePage = () => {
     ],
   });
 
-  type CategoryStatistic = {
-    category: string;
-    totalAmount: number;
-  };
-
   useEffect(() => {
+    const categoryColors: { [key: string]: string } = {
+      saving: "#00E676",
+      expense: "#00B8D4",
+      investment: "#2962FF",
+    };
+
     if (data?.categoryStatistics) {
       const categories = data.categoryStatistics.map(
-        (stat: CategoryStatistic) => stat.category
+        (stat: { category: string }) => stat.category
       );
       const totalAmounts = data.categoryStatistics.map(
-        (stat: CategoryStatistic) => stat.totalAmount
+        (stat: { totalAmount: number }) => stat.totalAmount
       );
 
-      const backgroundColors: string[] = [];
-      const borderColors: string[] = [];
-
-      categories.forEach(() => {
-        const color = `#${Math.floor(Math.random() * 16777215).toString(16)}`;
-        backgroundColors.push(color);
-        borderColors.push(color);
-      });
+      const backgroundColors: string[] = categories.map(
+        (category: string) => categoryColors[category] || "#CCCCCC"
+      );
+      const borderColors = categories.map(
+        (category: string) => categoryColors[category] || "#CCCCCC"
+      );
 
       setChartData((prev) => ({
         labels: categories,
@@ -101,40 +100,37 @@ const HomePage = () => {
   };
 
   return (
-    <>
-      <div className="flex flex-col gap-6 items-center max-w-7xl mx-auto z-20 relative justify-center">
-        <div className="flex items-center">
-          <p className="md:text-4xl text-2xl lg:text-4xl font-bold text-center relative z-50 mb-4 mr-4 bg-gradient-to-r from-pink-600 via-indigo-500 to-pink-400 inline-block text-transparent bg-clip-text">
-            Spend wisely, track wisely
-          </p>
-          <img
-            src={authUserData?.authUser.profilePicture}
-            className="w-11 h-11 rounded-full border cursor-pointer"
-            alt="Avatar"
+    <div className="flex flex-col gap-6 items-center max-w-7xl mx-auto z-20 relative justify-center">
+      <div className="flex items-center">
+        <p className="md:text-4xl text-2xl lg:text-4xl font-bold text-center relative z-50 mb-4 mr-4 bg-gradient-to-r from-blue-600 via-green-500 to-blue-400 inline-block text-transparent bg-clip-text">
+          Spend wisely, track wisely
+        </p>
+        <img
+          src={authUserData?.authUser.profilePicture}
+          className="w-11 h-11 rounded-full border cursor-pointer"
+          alt="Avatar"
+        />
+        {!loading && (
+          <MdLogout
+            className="mx-2 w-5 h-5 cursor-pointer text-white"
+            onClick={handleLogout}
           />
-          {!loading && (
-            <MdLogout
-              className="mx-2 w-5 h-5 cursor-pointer text-white"
-              onClick={handleLogout}
-            />
-          )}
-          {/* loading spinner */}
-          {loading && (
-            <div className="w-6 h-6 border-t-2 border-b-2 mx-2 rounded-full animate-spin"></div>
-          )}
-        </div>
-        <div className="flex flex-wrap w-full justify-center items-center gap-6">
-          {data?.categoryStatistics.length > 0 && (
-            <div className="h-[330px] w-[330px] md:h-[360px] md:w-[360px]  ">
-              <Doughnut data={chartData} />
-            </div>
-          )}
-
-          <TransactionForm />
-        </div>
-        <Cards />
+        )}
+        {loading && (
+          <div className="w-6 h-6 border-t-2 border-b-2 mx-2 rounded-full animate-spin"></div>
+        )}
       </div>
-    </>
+      <div className="flex flex-wrap w-full justify-center items-center gap-6">
+        {data?.categoryStatistics.length > 0 && (
+          <div className="h-[330px] w-[330px] md:h-[360px] md:w-[360px]">
+            <Doughnut data={chartData} />
+          </div>
+        )}
+        <TransactionForm />
+      </div>
+      <Cards />
+    </div>
   );
 };
+
 export default HomePage;

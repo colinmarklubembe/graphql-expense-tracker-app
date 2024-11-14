@@ -6,9 +6,11 @@ import { useParams } from "react-router-dom";
 import { GET_TRANSACTION } from "@/graphql/queries/transaction.query";
 import toast from "react-hot-toast";
 import TransactionFormSkeleton from "@/components/skeletons/TransactionFormSkeleton";
+import { useNavigate } from "react-router-dom";
 
 const TransactionPage = () => {
   const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
 
   const { loading, data } = useQuery(GET_TRANSACTION, {
     variables: { transactionId: id },
@@ -65,6 +67,8 @@ const TransactionPage = () => {
         },
       });
       toast.success("Transaction updated successfully");
+
+      navigate("/");
     } catch (error) {
       console.log("Error updating transaction", error);
       toast.error("Error updating transaction");
@@ -84,25 +88,25 @@ const TransactionPage = () => {
   if (loading) return <TransactionFormSkeleton />;
 
   return (
-    <div className="h-screen max-w-4xl mx-auto flex flex-col items-center z-50">
-      <p className="md:text-4xl text-2xl lg:text-4xl font-bold text-center relative z-50 mb-4 mr-4 bg-gradient-to-r from-pink-600 via-indigo-500 to-pink-400 inline-block text-transparent bg-clip-text">
+    <div className="h-screen max-w-4xl mx-auto flex flex-col items-center z-50 p-6">
+      <p className="md:text-4xl text-2xl lg:text-4xl font-bold text-center relative z-50 mb-4 bg-gradient-to-r from-blue-600 via-green-500 to-blue-400 inline-block text-transparent bg-clip-text">
         Update this transaction
       </p>
       <form
-        className="w-full max-w-lg flex flex-col gap-5 px-3 relative z-50"
+        className="w-full max-w-xl flex flex-col gap-7 px-6 py-8 bg-gray-200 rounded-lg shadow-lg relative z-50"
         onSubmit={handleSubmit}
       >
         {/* TRANSACTION */}
         <div className="flex flex-wrap">
           <div className="w-full">
             <label
-              className="block uppercase tracking-wide text-white text-xs font-bold mb-2"
+              className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
               htmlFor="description"
             >
               Transaction
             </label>
             <input
-              className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+              className="appearance-none block w-full bg-gray-100 text-gray-800 border border-gray-300 rounded-lg py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-blue-400"
               id="description"
               name="description"
               type="text"
@@ -112,28 +116,28 @@ const TransactionPage = () => {
             />
           </div>
         </div>
+
         {/* PAYMENT TYPE */}
         <div className="flex flex-wrap gap-3">
           <div className="w-full flex-1 mb-6 md:mb-0">
             <label
-              className="block uppercase tracking-wide text-white text-xs font-bold mb-2"
+              className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
               htmlFor="paymentType"
             >
               Payment Type
             </label>
             <div className="relative">
               <select
-                className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                className="block appearance-none w-full bg-gray-100 border border-gray-300 text-gray-800 py-3 px-4 pr-8 rounded-lg leading-tight focus:outline-none focus:bg-white focus:border-blue-400"
                 id="paymentType"
                 name="paymentType"
                 onChange={handleInputChange}
                 defaultValue={data?.transaction.paymentType || ""}
               >
-                {/* <option>-- select --</option> */}
-                <option value={"card"}>Card</option>
-                <option value={"cash"}>Cash</option>
+                <option value="card">Card</option>
+                <option value="cash">Cash</option>
               </select>
-              <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+              <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-600">
                 <svg
                   className="fill-current h-4 w-4"
                   xmlns="http://www.w3.org/2000/svg"
@@ -148,25 +152,24 @@ const TransactionPage = () => {
           {/* CATEGORY */}
           <div className="w-full flex-1 mb-6 md:mb-0">
             <label
-              className="block uppercase tracking-wide text-white text-xs font-bold mb-2"
+              className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
               htmlFor="category"
             >
               Category
             </label>
             <div className="relative">
               <select
-                className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                className="block appearance-none w-full bg-gray-100 border border-gray-300 text-gray-800 py-3 px-4 pr-8 rounded-lg leading-tight focus:outline-none focus:bg-white focus:border-blue-400"
                 id="category"
                 name="category"
                 onChange={handleInputChange}
                 defaultValue={data?.transaction.category || ""}
               >
-                {/* <option>-- select --</option> */}
-                <option value={"saving"}>Saving</option>
-                <option value={"expense"}>Expense</option>
-                <option value={"investment"}>Investment</option>
+                <option value="saving">Saving</option>
+                <option value="expense">Expense</option>
+                <option value="investment">Investment</option>
               </select>
-              <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+              <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-600">
                 <svg
                   className="fill-current h-4 w-4"
                   xmlns="http://www.w3.org/2000/svg"
@@ -181,13 +184,13 @@ const TransactionPage = () => {
           {/* AMOUNT */}
           <div className="w-full flex-1 mb-6 md:mb-0">
             <label
-              className="block uppercase text-white text-xs font-bold mb-2"
+              className="block uppercase text-gray-700 text-xs font-bold mb-2"
               htmlFor="amount"
             >
               Amount($)
             </label>
             <input
-              className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+              className="appearance-none block w-full bg-gray-100 text-gray-800 border border-gray-300 rounded-lg py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-blue-400"
               id="amount"
               name="amount"
               type="number"
@@ -202,13 +205,13 @@ const TransactionPage = () => {
         <div className="flex flex-wrap gap-3">
           <div className="w-full flex-1 mb-6 md:mb-0">
             <label
-              className="block uppercase tracking-wide text-white text-xs font-bold mb-2"
+              className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
               htmlFor="location"
             >
               Location
             </label>
             <input
-              className="appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+              className="appearance-none block w-full bg-gray-100 text-gray-800 border border-gray-300 rounded-lg py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-blue-400"
               id="location"
               name="location"
               type="text"
@@ -221,7 +224,7 @@ const TransactionPage = () => {
           {/* DATE */}
           <div className="w-full flex-1">
             <label
-              className="block uppercase tracking-wide text-white text-xs font-bold mb-2"
+              className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
               htmlFor="date"
             >
               Date
@@ -230,18 +233,17 @@ const TransactionPage = () => {
               type="date"
               name="date"
               id="date"
-              className="appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-[11px] px-4 mb-3 leading-tight focus:outline-none
-						 focus:bg-white"
+              className="appearance-none block w-full bg-gray-100 text-gray-800 border border-gray-300 rounded-lg py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-blue-400"
               placeholder="Select date"
               value={formData.date}
               onChange={handleInputChange}
             />
           </div>
         </div>
+
         {/* SUBMIT BUTTON */}
         <button
-          className="text-white font-bold w-full rounded px-4 py-2 bg-gradient-to-br
-          from-pink-500 to-pink-500 hover:from-pink-600 hover:to-pink-600"
+          className="text-white font-bold w-full rounded-lg px-4 py-3 bg-gradient-to-br from-blue-500 to-green-500 hover:from-blue-600 hover:to-green-600 transition duration-200"
           type="submit"
           disabled={updating}
         >

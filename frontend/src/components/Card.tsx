@@ -12,10 +12,9 @@ import { DELETE_TRANSACTION } from "@/graphql/mutations/transaction.mutation";
 import toast from "react-hot-toast";
 
 const categoryColorMap: { [key: string]: string } = {
-  saving: "from-green-700 to-green-400",
-  expense: "from-pink-800 to-pink-600",
-  investment: "from-blue-700 to-blue-400",
-  // Add more categories and corresponding color classes as needed
+  saving: "from-teal-600 to-green-400",
+  expense: "from-purple-600 to-pink-400",
+  investment: "from-blue-700 to-cyan-400",
 };
 
 type User = {

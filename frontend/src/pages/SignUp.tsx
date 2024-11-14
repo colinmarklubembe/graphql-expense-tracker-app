@@ -50,17 +50,17 @@ const SignUpPage = () => {
   };
 
   return (
-    <div className="h-screen flex justify-center items-center">
-      <div className="flex rounded-lg overflow-hidden z-50 bg-gray-300">
-        <div className="w-full bg-gray-100 min-w-80 sm:min-w-96 flex items-center justify-center">
+    <div className="flex justify-center items-center h-screen">
+      <div className="flex rounded-lg overflow-hidden z-50 bg-gray-100 shadow-lg">
+        <div className="w-full min-w-[400px] sm:min-w-[500px] flex items-center justify-center">
           <div className="max-w-md w-full p-6">
-            <h1 className="text-3xl font-semibold mb-6 text-black text-center">
+            <h1 className="text-3xl font-semibold mb-4 text-black text-center">
               Sign Up
             </h1>
-            <h1 className="text-sm font-semibold mb-6 text-gray-500 text-center">
+            <h2 className="text-sm font-semibold mb-6 text-gray-600 text-center">
               Join to keep track of your expenses
-            </h1>
-            <form className="space-y-4" onSubmit={handleSubmit}>
+            </h2>
+            <form className="space-y-6" onSubmit={handleSubmit}>
               <InputField
                 label="Full Name"
                 id="name"
@@ -75,7 +75,6 @@ const SignUpPage = () => {
                 value={signUpData.username}
                 onChange={handleChange}
               />
-
               <InputField
                 label="Password"
                 id="password"
@@ -102,11 +101,10 @@ const SignUpPage = () => {
                   checked={signUpData.gender === "female"}
                 />
               </div>
-
               <div>
                 <button
                   type="submit"
-                  className="w-full bg-black text-white p-2 rounded-md hover:bg-gray-800 focus:outline-none focus:bg-black  focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full bg-gradient-to-r from-blue-500 to-green-500 text-white p-2 rounded-md hover:from-blue-600 hover:to-green-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                   disabled={loading}
                 >
                   {loading ? "Loading..." : "Sign Up"}
@@ -116,7 +114,10 @@ const SignUpPage = () => {
             <div className="mt-4 text-sm text-gray-600 text-center">
               <p>
                 Already have an account?{" "}
-                <Link to="/login" className="text-black hover:underline">
+                <Link
+                  to="/login"
+                  className="text-black font-semibold hover:underline"
+                >
                   Login here
                 </Link>
               </p>

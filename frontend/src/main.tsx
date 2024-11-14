@@ -18,7 +18,7 @@ const client = new ApolloClient({
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <BrowserRouter>
-      <div className="bg-black w-full">
+      <div className="bg-gray-900 w-full">
         <BackgroundBeams />
         <ApolloProvider client={client}>
           <App />

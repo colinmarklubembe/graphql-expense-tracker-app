@@ -42,20 +42,20 @@ const TransactionForm = () => {
 
   return (
     <form
-      className="w-full max-w-lg flex flex-col gap-5 px-3"
+      className="w-full max-w-xl flex flex-col gap-5 px-6 py-8 bg-gray-200 rounded-lg shadow-lg"
       onSubmit={handleSubmit}
     >
       {/* TRANSACTION */}
       <div className="flex flex-wrap">
-        <div className="w-full">
+        <div className="w-full mb-4">
           <label
-            className="block uppercase tracking-wide text-white text-xs font-bold mb-2"
+            className="block uppercase tracking-wide text-gray-600 text-xs font-bold mb-2"
             htmlFor="description"
           >
             Transaction
           </label>
           <input
-            className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+            className="appearance-none block w-full bg-gray-100 text-gray-800 border border-gray-300 rounded-lg py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-blue-400"
             id="description"
             name="description"
             type="text"
@@ -64,26 +64,27 @@ const TransactionForm = () => {
           />
         </div>
       </div>
+
       {/* PAYMENT TYPE */}
       <div className="flex flex-wrap gap-3">
-        <div className="w-full flex-1 mb-6 md:mb-0">
+        <div className="w-full flex-1 mb-4">
           <label
-            className="block uppercase tracking-wide text-white text-xs font-bold mb-2"
+            className="block uppercase tracking-wide text-gray-600 text-xs font-bold mb-2"
             htmlFor="paymentType"
           >
             Payment Type
           </label>
           <div className="relative">
             <select
-              className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+              className="block appearance-none w-full bg-gray-100 border border-gray-300 text-gray-800 py-3 px-4 pr-8 rounded-lg leading-tight focus:outline-none focus:bg-white focus:border-blue-400"
               id="paymentType"
               name="paymentType"
             >
               <option>-- select --</option>
-              <option value={"card"}>Card</option>
-              <option value={"cash"}>Cash</option>
+              <option value="card">Card</option>
+              <option value="cash">Cash</option>
             </select>
-            <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+            <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-600">
               <svg
                 className="fill-current h-4 w-4"
                 xmlns="http://www.w3.org/2000/svg"
@@ -96,25 +97,25 @@ const TransactionForm = () => {
         </div>
 
         {/* CATEGORY */}
-        <div className="w-full flex-1 mb-6 md:mb-0">
+        <div className="w-full flex-1 mb-4">
           <label
-            className="block uppercase tracking-wide text-white text-xs font-bold mb-2"
+            className="block uppercase tracking-wide text-gray-600 text-xs font-bold mb-2"
             htmlFor="category"
           >
             Category
           </label>
           <div className="relative">
             <select
-              className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+              className="block appearance-none w-full bg-gray-100 border border-gray-300 text-gray-800 py-3 px-4 pr-8 rounded-lg leading-tight focus:outline-none focus:bg-white focus:border-blue-400"
               id="category"
               name="category"
             >
               <option>-- select --</option>
-              <option value={"saving"}>Saving</option>
-              <option value={"expense"}>Expense</option>
-              <option value={"investment"}>Investment</option>
+              <option value="saving">Saving</option>
+              <option value="expense">Expense</option>
+              <option value="investment">Investment</option>
             </select>
-            <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+            <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-600">
               <svg
                 className="fill-current h-4 w-4"
                 xmlns="http://www.w3.org/2000/svg"
@@ -127,15 +128,15 @@ const TransactionForm = () => {
         </div>
 
         {/* AMOUNT */}
-        <div className="w-full flex-1 mb-6 md:mb-0">
+        <div className="w-full flex-1 mb-4">
           <label
-            className="block uppercase text-white text-xs font-bold mb-2"
+            className="block uppercase tracking-wide text-gray-600 text-xs font-bold mb-2"
             htmlFor="amount"
           >
-            Amount($)
+            Amount ($)
           </label>
           <input
-            className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+            className="appearance-none block w-full bg-gray-100 text-gray-800 border border-gray-300 rounded-lg py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-blue-400"
             id="amount"
             name="amount"
             type="number"
@@ -145,16 +146,16 @@ const TransactionForm = () => {
       </div>
 
       {/* LOCATION */}
-      <div className="flex flex-wrap gap-3">
-        <div className="w-full flex-1 mb-6 md:mb-0">
+      <div className="flex flex-wrap gap-3 mb-4">
+        <div className="w-full flex-1">
           <label
-            className="block uppercase tracking-wide text-white text-xs font-bold mb-2"
+            className="block uppercase tracking-wide text-gray-600 text-xs font-bold mb-2"
             htmlFor="location"
           >
             Location
           </label>
           <input
-            className="appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+            className="appearance-none block w-full bg-gray-100 text-gray-800 border border-gray-300 rounded-lg py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-blue-400"
             id="location"
             name="location"
             type="text"
@@ -165,7 +166,7 @@ const TransactionForm = () => {
         {/* DATE */}
         <div className="w-full flex-1">
           <label
-            className="block uppercase tracking-wide text-white text-xs font-bold mb-2"
+            className="block uppercase tracking-wide text-gray-600 text-xs font-bold mb-2"
             htmlFor="date"
           >
             Date
@@ -174,17 +175,14 @@ const TransactionForm = () => {
             type="date"
             name="date"
             id="date"
-            className="appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-[11px] px-4 mb-3 leading-tight focus:outline-none
-						 focus:bg-white"
-            placeholder="Select date"
+            className="appearance-none block w-full bg-gray-100 text-gray-800 border border-gray-300 rounded-lg py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-blue-400"
           />
         </div>
       </div>
+
       {/* SUBMIT BUTTON */}
       <button
-        className="text-white font-bold w-full rounded px-4 py-2 bg-gradient-to-br
-          from-pink-500 to-pink-500 hover:from-pink-600 hover:to-pink-600
-						disabled:opacity-70 disabled:cursor-not-allowed"
+        className="text-white font-semibold w-full rounded-lg px-4 py-3 bg-gradient-to-br from-green-500 to-blue-500 hover:from-green-600 hover:to-blue-600 disabled:opacity-70 disabled:cursor-not-allowed transition duration-200"
         disabled={loading}
         type="submit"
       >
