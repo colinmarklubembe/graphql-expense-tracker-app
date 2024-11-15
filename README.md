@@ -90,7 +90,7 @@ npm run dev
 
 ## Folder Structure
 
-```json
+```sh
 .env
 .gitignore
 .vscode/
